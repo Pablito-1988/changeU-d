@@ -1,15 +1,16 @@
-import {View, Text, StyleSheet} from 'react-native'
+import {View, Image, StyleSheet} from 'react-native'
 import { Link } from 'react-router-native'
+import Logo from '../assets/logoApp.png'
 
 export default function NavBar() {
-    console.log('hola estoy por aca')
+    
     const style = StyleSheet.create({
         constainer: {
-            paddingTop: 50,
-            paddingBottom:20,
+            paddingTop: 10,
+            paddingBottom:0,
             flexDirection: 'row',
             justifyContent: 'space-around',
-            backgroundColor: '#999'
+            backgroundColor: '#008037'
         },
         linkButton:{
             fontSize:18,
@@ -18,18 +19,16 @@ export default function NavBar() {
             borderRadius: 5,
             alignItems: 'center'
 
+        },
+        logo:{
+            width:100,
+            height:100,
+            paddingBottom:0
         }
     })
   return (
         <View style={style.constainer}>
-           <Link to='/' style={style.linkButton} >
-            <Text title='Home'>Home</Text>
-           </Link>
-           <Link to='/login' style={style.linkButton}>
-            <Text title='Login' >Login</Text >
-           </Link>
-           
-
+            <Image source={Logo} style={style.logo}></Image>
         </View>
   )
 }
