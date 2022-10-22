@@ -58,6 +58,9 @@ export default function Home() {
       marginTop:30,
       justifyContent: "space-between",
       width: 400,
+      padding:5,
+      backgroundColor:'white',
+      borderRadius:5
     },
     buttonStyle: {
         width:75,
