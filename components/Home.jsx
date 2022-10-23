@@ -1,15 +1,16 @@
-import React, { useState , useContext} from "react";
+import React, { useState , useContext, useEffect} from "react";
 import { ListContext } from "./Context/ListContext";
 import { View, Text, TextInput, StyleSheet, Button , Pressable } from "react-native";
 
 export default function Home() {
-  const [db, setDb] = useState([]);
+    
   const [value, setValue] = useState(0);
   const [motivo, setMotive] = useState("");
   const [showSave , setShowSave] = useState(false)
   const [ars, setArs] = useState(0);
 
-  const {list, addItem , clearList , deletItem, totalToShow} = useContext(ListContext)
+  const {list, addItem , clearList , deletItem, totalToShow , dolar} = useContext(ListContext)
+  
 
   function arsSum(e) {
     setArs(e);
@@ -17,9 +18,15 @@ export default function Home() {
   function motive(e) {
     setMotive(e);
   }
-
   function calculate() {
-    setValue(ars * 300)
+    const array = Array.from(dolar)
+    array.map((e, i)=>{
+      e === ',' ? array.splice(i, 1 ,'.') : null
+
+    })
+    const string = array.join('')
+    const round = Number(string)
+    setValue(ars * round)
     setShowSave(true);
   }
   function save() {
@@ -28,6 +35,7 @@ export default function Home() {
     setMotive("");
     setShowSave(false)
   }
+  
 
 
   const style = StyleSheet.create({
@@ -82,6 +90,7 @@ export default function Home() {
   return (
     <View style={style.homeContainer}>
       <Text style={style.mainTitle}>CONTROL DE GASTOS EN TARJETA</Text>
+      <Text >valod dolar: {dolar}</Text>
       {totalToShow>0 && <Text style={style.mainTitle}>El total en pesos es ${totalToShow}</Text>}
       <TextInput style={style.input} placeholder="Agrega un motivo" onChangeText={motive}></TextInput>
       <TextInput
@@ -92,7 +101,7 @@ export default function Home() {
         style={style.input}
       ></TextInput>
       <Button  title="Calcular" onPress={calculate}></Button>
-      <Text style={style.mainTitle}>En pesos es: ${value}</Text>
+      <Text style={style.mainTitle}>En pesos es: ${value.toFixed(2)}</Text>
       {showSave && <> 
             <Button  title="Guardar gasto" onPress={save}></Button> 
             <Text style={style.separator}></Text>

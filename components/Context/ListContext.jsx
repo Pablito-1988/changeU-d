@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext, useEffect } from "react";
 import { useState } from "react";
 
 export const ListContext = createContext();
@@ -8,6 +8,7 @@ const { Provider } = ListContext;
 const CustomComponent = ({ children }) => {
   const [list, setList] = useState([]);
   const [totalSum , setTotalSum] = useState([])
+  const[dolar, setDolar]= useState(0)
   const totalToShow = totalSum.reduce((acc , curr) => acc + curr, 0)
   let today = new Date(),
   date =  today.getDate() + '/' + (today.getMonth() + 1) ;
@@ -32,7 +33,16 @@ const CustomComponent = ({ children }) => {
     setTotalSum([])
   };
 
+  useEffect(()=>{
+    fetch('https://www.dolarsi.com/api/api.php?type=valoresprincipales')
+    .then((response) => response.json()
+    )
+      .then(data => setDolar(data[6].casa.venta));
+  },[])
 
+
+
+ 
 
   const listContextValue = {
     list: list,
@@ -40,6 +50,7 @@ const CustomComponent = ({ children }) => {
     addItem: addItem,
     clearList: clearList,
     deletItem: deletItem,
+    dolar: dolar
   };
   return <Provider value={listContextValue}>{children}</Provider>;
 };
