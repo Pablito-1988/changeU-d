@@ -1,34 +1,32 @@
-import {View, Image, StyleSheet} from 'react-native'
+import {View, Image, StyleSheet, Text} from 'react-native'
 import { Link } from 'react-router-native'
-import Logo from '../assets/logoApp.png'
+import Logo from '../assets/logo1.png'
 
 export default function NavBar() {
     
     const style = StyleSheet.create({
         constainer: {
-            paddingTop: 10,
-            paddingBottom:0,
-            flexDirection: 'row',
-            justifyContent: 'space-around',
+            alignItems:'center',
             backgroundColor: '#008037'
         },
-        linkButton:{
-            fontSize:18,
-            color: 'black',
-            borderColor: 'black',
-            borderRadius: 5,
-            alignItems: 'center'
-
-        },
+        mainTitle: {
+            fontSize: 20,
+            
+            marginBottom: 5,
+            fontWeight: "bold",
+            color:'white'
+          },
         logo:{
             width:100,
             height:100,
-            paddingBottom:0
+            marginTop:10,
+            marginBottom:10           
         }
     })
   return (
         <View style={style.constainer}>
             <Image source={Logo} style={style.logo}></Image>
+            <Text style={style.mainTitle}>CONTROL DE GASTOS EN TAJETA</Text>
         </View>
   )
 }

@@ -7,24 +7,25 @@ const { Provider } = ListContext;
 
 const CustomComponent = ({ children }) => {
   const [list, setList] = useState([]);
-  const [totalSum , setTotalSum] = useState([])
-  const[dolar, setDolar]= useState(0)
-  const totalToShow = totalSum.reduce((acc , curr) => acc + curr, 0)
+  const [totalSum , setTotalSum] = useState(0)
+  const [dolar, setDolar]= useState(0)
   let today = new Date(),
-  date =  today.getDate() + '/' + (today.getMonth() + 1) ;
+  date =  today.getDate() + '/' + (today.getMonth() + 1) 
 
 
   const addItem = (value, motiv, ars) => {
     setList([...list, { motivo: motiv, ars: value, u$d: ars , fecha : date }]);
-    setTotalSum([...totalSum , value])
+    setTotalSum(totalSum + Number(value)) 
+    
   };
 
-  const deletItem = (motiv) => {
+  const deletItem = (motiv , ars) => {
     setList(
       list.filter((e) => {
         return e.motivo !== motiv;
       })
     );
+    setTotalSum(totalSum - Number(ars))
     
   };
 
@@ -37,7 +38,12 @@ const CustomComponent = ({ children }) => {
     fetch('https://www.dolarsi.com/api/api.php?type=valoresprincipales')
     .then((response) => response.json()
     )
-      .then(data => setDolar(data[6].casa.venta));
+      .then(data => {
+
+        console.log('se actualizo valor dolar')
+        setDolar(data[6].casa.venta)
+      }
+        );
   },[])
 
 
@@ -46,7 +52,7 @@ const CustomComponent = ({ children }) => {
 
   const listContextValue = {
     list: list,
-    totalToShow : totalToShow,
+    totalSum : totalSum,
     addItem: addItem,
     clearList: clearList,
     deletItem: deletItem,
