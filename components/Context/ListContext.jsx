@@ -11,7 +11,7 @@ const CustomComponent = ({ children }) => {
   const [dolar, setDolar]= useState(0)
   let today = new Date(),
   date =  today.getDate() + '/' + (today.getMonth() + 1) 
-
+  
 
   const addItem = (value, motiv, ars) => {
     setList([...list, { motivo: motiv, ars: value, u$d: ars , fecha : date }]);
@@ -31,7 +31,7 @@ const CustomComponent = ({ children }) => {
 
   const clearList = () => {
     setList([]);
-    setTotalSum([])
+    setTotalSum(0)
   };
 
   useEffect(()=>{
@@ -45,8 +45,6 @@ const CustomComponent = ({ children }) => {
       }
         );
   },[])
-
-
 
  
 

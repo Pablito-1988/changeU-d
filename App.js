@@ -11,7 +11,7 @@ export default function App() {
   return (
      <NativeRouter>
       <CustomComponent>
-        <SafeAreaView style={{flex:1, backgroundColor: "#6AD169"}}>
+        <SafeAreaView style={{flex:1, backgroundColor: "#EDF5F5"}}>
           <ScrollView>
             <Main/>
           </ScrollView>   

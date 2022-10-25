@@ -8,7 +8,7 @@ import { Route, Switch } from "react-router-native";
 const Main = () => {
   return (
     <View>
-        <StatusBar></StatusBar>
+        <StatusBar ></StatusBar>
       <NavBar></NavBar>
       <Switch>
         <Route  path="/" exact component={Home}/>

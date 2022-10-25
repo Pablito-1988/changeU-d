@@ -21,7 +21,7 @@ export default function Home() {
     useContext(ListContext);
 
   function arsSum(e) {
-    setArs(e);
+    setArs(e)
   }
   function motive(e) {
     setMotive(e);
@@ -37,28 +37,31 @@ export default function Home() {
     setShowSave(true);
   }
   function save() {
-    addItem(value.toFixed(2), motivo, Number(ars));
+    if(ars > 0){
+
+      addItem(value.toFixed(2), motivo, Number(ars));
     setValue(0);
     setMotive("");
     setShowSave(false);
+    }
+    
   }
 
   const style = StyleSheet.create({
     homeContainer: {
       alignItems: "center",
-      backgroundColor: "#6AD169",
+
+      backgroundColor: "#EDF5F5",
     },
     mainTitle: {
       fontSize: 20,
       paddingTop: 15,
       marginBottom: 15,
       fontWeight: "bold",
-      /* color:'white' */
     },
-    inputTitle:{
-        fontSize: 19,
+    inputTitle: {
+      fontSize: 19,
       paddingTop: 10,
-      /* marginBottom: 5, */
       fontWeight: "bold",
     },
     input: {
@@ -67,34 +70,40 @@ export default function Home() {
       borderStyle: "solid",
       fontSize: 20,
       backgroundColor: "white",
-      marginBottom: 35,
+      marginBottom: 20,
+      marginTop: 10,
+      textAlign: "center",
+      borderRadius: 10,
+      borderWidth: 1,
+      borderColor: "#6AD169",
+    },
+    inputNumber: {
+      width: 200,
+      height: 50,
+      borderStyle: "solid",
+      fontSize: 20,
+      backgroundColor: "white",
+      marginBottom: 15,
       marginTop: 10,
       textAlign: "center",
       borderRadius: 5,
-      
+      borderRadius: 10,
+      borderWidth: 1,
+      borderColor: "#6AD169",
     },
-    inputNumber:{
-        width: 200,
-        height: 50,
-        borderStyle: "solid",
-        fontSize: 20,
-        backgroundColor: "white",
-        marginBottom: 15,
-        marginTop: 10,
-        textAlign: "center",
-        borderRadius: 5,},
 
     listContainer: {
       flexDirection: "row",
       marginBottom: 5,
-      paddingHorizontal:10,
-      justifyContent:'space-around',
+      paddingHorizontal: 10,
+      justifyContent: "space-around",
       alignItems: "center",
-      borderBottomColor:'black',
-      borderBottomWidth:1 
+      borderBottomColor: "black",
+      borderBottomWidth: 1,
+      height: 50,
     },
     buttonStyle: {
-      width:100,
+      width: 100,
       height: 40,
       borderRadius: 5,
       justifyContent: "center",
@@ -108,51 +117,54 @@ export default function Home() {
       marginBottom: 5,
     },
     deleteIcon: {
-      height: 30,
-      width: 30,
-      /* backgroundColor:'red', */
-      borderRadius:5
+      height: 20,
+      width: 20,
+      borderRadius: 5,
     },
     listWrapper: {
       width: 400,
-      marginHorizontal:10,
-      backgroundColor: "white",
+      marginHorizontal: 10,
       borderRadius: 5,
       marginTop: 30,
+      justifyContent: "center",
       alignItems: "center",
-      marginBottom:30,
+      marginBottom: 30,
       shadowColor: "#000",
-shadowOffset: {
-	width: 0,
-	height: 2,
-},
-shadowOpacity: 0.25,
-shadowRadius: 3.84,
+      backgroundColor: "#EDFAF3",
+      borderWidth: 1,
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
 
-elevation: 5,
+      elevation: 5,
     },
-    tabletext:{
-        width:100,
-        fontSize:18
+    tabletext: {
+      width: 90,
+      fontSize: 18,
+      textAlign: "center",
     },
-    tableTitle:{
-        width:100,
-        fontSize:19,
-        marginTop:5
-    }
+    tableTitle: {
+      width: 90,
+      fontSize: 19,
+      marginTop: 5,
+      textAlign: "center",
+    },
   });
   return (
     <View style={style.homeContainer}>
-      {/* <Text style={style.mainTitle}>CONTROL DE GASTOS EN TARJETA</Text> */}
-       {/* <Text style={{fontSize: 16, marginTop:10}}>Valor dolar: u$d {dolar}</Text> */}
-      <Text style={style.inputTitle}>Agregar un motivo</Text>
+      <Text style={style.inputTitle}>Agregar un motivo:</Text>
       <TextInput
         style={style.input}
         placeholder="Ej. ropa"
         onChangeText={motive}
       ></TextInput>
-      <Text style={style.inputTitle}>Agregar un monto</Text>
-      <Text style={{fontSize: 16, marginTop:10}}>Valor dolar actualizado : u$d {dolar}</Text>
+      <Text style={style.inputTitle}>Agregar un monto:</Text>
+      <Text style={{ fontSize: 16, marginTop: 10 }}>
+        Valor dolar actualizado : u$d {dolar}
+      </Text>
       <TextInput
         keyboardType="numeric"
         placeholder="Ej. 50"
@@ -183,7 +195,8 @@ elevation: 5,
           <View style={style.listContainer}>
             <Text style={style.tableTitle}>Fecha</Text>
             <Text style={style.tableTitle}>Motivo</Text>
-            <Text style={style.tableTitle}> Pesos</Text>
+            <Text style={style.tableTitle}>u$d</Text>
+            <Text style={style.tableTitle}>ARS</Text>
             <Text style={style.tableTitle}></Text>
           </View>
         )}
@@ -194,10 +207,11 @@ elevation: 5,
                 <View key={index} style={style.listContainer}>
                   <Text style={style.tabletext}>{element.fecha}</Text>
                   <Text style={style.tabletext}>{element.motivo}</Text>
-                  <Text style={style.tabletext}> ${element.ars}</Text>
+                  <Text style={style.tabletext}>${element.u$d}</Text>
+                  <Text style={style.tabletext}>${element.ars}</Text>
                   <Pressable
                     style={style.buttonStyle}
-                    onPress={() => deletItem(element.motivo , element.ars)}
+                    onPress={() => deletItem(element.motivo, element.ars)}
                   >
                     <Image style={style.deleteIcon} source={Delete} />
                   </Pressable>
@@ -205,14 +219,17 @@ elevation: 5,
               );
             })
           : null}
-         {list.length > 0 && <Text style={style.mainTitle}>El total en pesos es ${totalSum.toFixed(2)}</Text>} 
+        {list.length > 0 && (
+          <Text style={style.mainTitle}>
+            El total en pesos es ${totalSum.toFixed(2)}
+          </Text>
+        )}
       </View>
       {list.length === 0 && (
         <View>
-          <Text>No hay elementos para mostrar</Text>
+          <Text >Todavía no realizaste gastos. </Text>
         </View>
       )}
-       
     </View>
   );
 }
